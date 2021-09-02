@@ -43,6 +43,7 @@ def printMenu():
     print("5- Clasificar las obras por la nacionalidad de sus autores")
     print("6- Calcular el transporte de obras de un departamento")
     print("7- Proponer una nueva exposición en el museo")
+    print('8')
 
 def initCatalog():
     """
@@ -63,6 +64,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        print('----------------')
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
@@ -75,10 +77,15 @@ while True:
         print('Obras cargadas: ' + str(sizeartworks))
         print('Last 3 artists')
         for i in range(0,3):
-            print('Artista '+str(sizeartists-i)+': '+ str(lt.getElement(artist,sizeartists-i)))
+            print('Artista '+str(sizeartists-2+i)+': '+(lt.getElement(artist,sizeartists-2+i))['DisplayName'])
+        print('----------------')
         print('Last 3 artworks')
         for i in range(0,3):
-            print('Obra '+str(sizeartists-i)+': '+str(lt.getElement(artworks,sizeartists-i)))
+            print('Obra '+str(sizeartworks-2+i)+': '+(lt.getElement(artworks,sizeartworks-2+i))['Title'])
+        print('----------------')
+
+
+        
     else:
         sys.exit(0)
 
