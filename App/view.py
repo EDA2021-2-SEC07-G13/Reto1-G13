@@ -44,7 +44,17 @@ def printMenu():
     print("6- Calcular el transporte de obras de un departamento")
     print("7- Proponer una nueva exposición en el museo")
 
-catalog = None
+def initCatalog():
+    """
+    Inicializa el catalogo de autores y obras
+    """
+    return controller.initCatalog()
+
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    controller.loadData(catalog)
 
 """
 Menu principal
@@ -54,10 +64,28 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
-    elif int(inputs[0]) == 2:
-        pass
-
+        catalog = initCatalog()
+        loadData(catalog)
+        size=str(lt.size(catalog['Artist']))
+        initCatalog(catalog)
+        sizeartists=(lt.size(catalog['artist']))
+        sizeartworks=(lt.size(catalog['artwork']))
+        artist=catalog['artists']
+        artworks=catalog['artworks']
+        print('Artistas cargados: ' +str(sizeartists))
+        print('Obras cargadas: ' + str(sizeartworks))
+        print('Last 3 artists')
+        for i in range(0,3):
+            print('Artista '+str(sizeartists-i)+': '+lt.getElement(artist,sizeartists-i))
+        print('Last 3 artworks')
+        for i in range(0,3):
+            print('Obra '+str(sizeartists-i)+': '+lt.getElement(artworks,sizeartists-i))
     else:
         sys.exit(0)
-sys.exit(0)
+
+
+
+
+
+
+
