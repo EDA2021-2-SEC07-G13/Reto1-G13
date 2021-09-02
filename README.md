@@ -1,8 +1,8 @@
 #ISIS1225 - Librerias de soporte
 
-Estudiante 1: Thomas Gomez Serpa, t.gomezs2@uniandes.edu.co, 202116869
+Estudiante 1: Thomas Gomez Serpa, t.gomezs2@uniandes.edu.co, 202116869, Requerimiento 3.
 
-Estudiante 2: Wyo Hann Chu Mendez, w.chu@uniandes.edu.co, 202015066
+Estudiante 2: Wyo Hann Chu Mendez, w.chu@uniandes.edu.co, 202015066, Requerimiento 4.
 
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos
 
