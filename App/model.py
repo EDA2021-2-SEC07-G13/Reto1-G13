@@ -57,7 +57,7 @@ def newCatalog():
 
 def addArtist(catalog, artist):
     # Se adiciona el artista a la lista de artistas
-    lt.addLast(catalog['artist'], artist)
+    lt.addLast(catalog['artists'], artist)
     
 
 

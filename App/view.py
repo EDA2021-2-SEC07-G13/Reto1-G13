@@ -66,20 +66,19 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        size=str(lt.size(catalog['Artist']))
-        initCatalog(catalog)
-        sizeartists=(lt.size(catalog['artist']))
-        sizeartworks=(lt.size(catalog['artwork']))
+        size=str(lt.size(catalog['artists']))
+        sizeartists=(lt.size(catalog['artists']))
+        sizeartworks=(lt.size(catalog['artworks']))
         artist=catalog['artists']
         artworks=catalog['artworks']
         print('Artistas cargados: ' +str(sizeartists))
         print('Obras cargadas: ' + str(sizeartworks))
         print('Last 3 artists')
         for i in range(0,3):
-            print('Artista '+str(sizeartists-i)+': '+lt.getElement(artist,sizeartists-i))
+            print('Artista '+str(sizeartists-i)+': '+ str(lt.getElement(artist,sizeartists-i)))
         print('Last 3 artworks')
         for i in range(0,3):
-            print('Obra '+str(sizeartists-i)+': '+lt.getElement(artworks,sizeartists-i))
+            print('Obra '+str(sizeartists-i)+': '+str(lt.getElement(artworks,sizeartists-i)))
     else:
         sys.exit(0)
 
