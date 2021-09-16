@@ -24,6 +24,9 @@ import config as cf
 import model
 import csv
 
+from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.ADT import list as lt
+
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -31,11 +34,11 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de Autores y Obras
 
-def initCatalog():
+def initCatalog(list_type):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog()
+    catalog = model.newCatalog(list_type)
     return catalog
 
 
@@ -76,5 +79,10 @@ def loadArtworks(catalog):
 
 
 # Funciones de ordenamiento
+def sortArtworks(catalog, size, algorithm):
+    """
+    Ordena los libros por average_rating
+    """
+    return model.sortArtworks(catalog, size, algorithm)
 
 # Funciones de consulta sobre el catálogo
