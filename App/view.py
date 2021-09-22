@@ -20,12 +20,15 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+
 from io import SEEK_SET
+import os
 import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
+from datetime import *
 
 
 """
@@ -58,16 +61,169 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
-def printSortResults(ord_artworks, sample = 10):
+def printSortResultsArtworks(ord_artworks, fecha_1, fecha_2):
+    
     size = lt.size(ord_artworks)
-    if size > sample:
-        print("Las primeras ", sample, " obras ordenadas cronologicamente son:")
-        i=1
-        while i <= sample:
-            artwork = lt.getElement(ord_artworks,int(i))
-            print('Titulo: ' + artwork['Title'] + ' Date Acquired: ' +
-                  artwork['DateAcquired'])
-            i+=1
+    
+    total_purchase = 0
+    pos_1 = 1
+    pos_2 = 1
+
+    yf1, mf1, df1 = list(str(fecha_1).split("-"))
+    yf2, mf2, df2 = list(str(fecha_2).split("-"))
+    fecha_1_date = date(int(yf1) , int(mf1), int(df1))
+    fecha_2_date = date(int(yf2) , int(mf2), int(df2))
+    
+
+    for x in range(1,size+1):
+        
+        if len(list(str((lt.getElement(ord_artworks,pos_1+1))['DateAcquired']).split("-"))) != 3 :
+            break
+        yx , mx, dx = list(str((lt.getElement(ord_artworks,x))['DateAcquired']).split("-"))
+        date_artwork_fecha = date(int(yx) , int(mx), int(dx))
+
+        if (lt.getElement(ord_artworks,x))['DateAcquired'] == fecha_1_date:
+            print("======")
+            
+            break
+        elif date_artwork_fecha < fecha_1_date:
+            pos_1 += 1
+        elif  date_artwork_fecha > fecha_1_date:
+            
+            break   
+        
+
+    pos_2 = 1
+
+    for w in range(1,size+1):
+
+        if len(list(str((lt.getElement(ord_artworks,pos_2+1))['DateAcquired']).split("-"))) != 3:
+            break
+
+        yw , mw, dw = list(str((lt.getElement(ord_artworks,w))['DateAcquired']).split("-"))
+        date_artwork_fecha = date(int(yw) , int(mw), int(dw))
+
+        if (lt.getElement(ord_artworks,w))['DateAcquired'] == fecha_2_date:
+            print("======")
+            if (lt.getElement(ord_artworks,w+1))['DateAcquired'] != fecha_2_date:
+                print("este?")
+                break
+            else: 
+                pos_2 += 1 
+        elif date_artwork_fecha < fecha_2_date:
+             pos_2 += 1
+        elif date_artwork_fecha > fecha_2_date:
+            pos_2 -= 1
+            break               
+        
+    for p in range(pos_1, pos_2+1):
+        if str((lt.getElement(ord_artworks,p))['CreditLine']) == 'Purchase':
+            total_purchase += 1    
+
+
+
+    print("El total de obras para este rango fue de ", str(size - pos_1 - 1 - (size - pos_2) ), "obras")
+    print("Las primeras 3 y ultimas 3 obras ordenadas cronologicamente para el rango ", str(fecha_1), " - " , str(fecha_2),  "son:")
+    print('El total de obras adquiridas por compra en el rango es de: ', total_purchase)
+
+    
+    artwork_1 = lt.getElement(ord_artworks,int(pos_1))
+    id_artwork1 = str(artwork_1['ConstituentID']).replace("[","").replace("]","")
+    list_id_artwork_1 = id_artwork1.split(",")
+    artistas_artwork1 = ""
+    
+    for x in list_id_artwork_1:
+        for y in range(1,lt.size(artist)+1):
+            
+            if str((lt.getElement(artist,y))['ConstituentID']).replace("[","").replace("]","") == x:
+                artistas_artwork1 =  str((lt.getElement(artist,y))['DisplayName'])
+                break
+    
+    print('Titulo: ' + artwork_1['Title'] +' Artista(s): ' + str(artistas_artwork1) +  ' Date Acquired: ' +
+    artwork_1['DateAcquired'] + ' Medio: ' + artwork_1['Medium'] + ' Dimensions: ' + artwork_1['Dimensions'])
+
+
+
+    artwork_2 = lt.getElement(ord_artworks,int(pos_1+1))
+    id_artwork2 = str(artwork_2['ConstituentID']).replace("[","").replace("]","")
+    list_id_artwork_2 = id_artwork2.split(",")
+    artistas_artwork2 = ""
+    
+    for x in list_id_artwork_2:
+        for y in range(1,lt.size(artist)+1):
+            
+            if str((lt.getElement(artist,y))['ConstituentID']).replace("[","").replace("]","") == x:
+                artistas_artwork2 =  str((lt.getElement(artist,y))['DisplayName'])
+                break
+
+    print('Titulo: ' + artwork_2['Title'] +' Artista(s): ' + str(artistas_artwork2) +  ' Date Acquired: ' +
+    artwork_2['DateAcquired'] + ' Medio: ' + artwork_2['Medium'] + ' Dimensions: ' + artwork_2['Dimensions'])
+
+
+            
+    artwork_3 = lt.getElement(ord_artworks,int(pos_1+2))
+    id_artwork3 = str(artwork_3['ConstituentID']).replace("[","").replace("]","")
+    list_id_artwork_3 = id_artwork3.split(",")
+    artistas_artwork3 = ""
+    
+    for x in list_id_artwork_3:
+        for y in range(1,lt.size(artist)+1):
+            
+            if str((lt.getElement(artist,y))['ConstituentID']).replace("[","").replace("]","") == x:
+                artistas_artwork3 =  str((lt.getElement(artist,y))['DisplayName'])
+                break
+    print('Titulo: ' + artwork_3['Title'] +' Artista(s): ' + str(artistas_artwork3) +  ' Date Acquired: ' +
+    artwork_3['DateAcquired'] + ' Medio: ' + artwork_3['Medium'] + ' Dimensions: ' + artwork_3['Dimensions'])
+
+
+
+    artwork_4 = lt.getElement(ord_artworks,int(pos_1-2))
+    id_artwork4 = str(artwork_4['ConstituentID']).replace("[","").replace("]","")
+    list_id_artwork_4 = id_artwork4.split(",")
+    artistas_artwork4 = ""
+    
+    for x in list_id_artwork_4:
+        for y in range(1,lt.size(artist)+1):
+            
+            if str((lt.getElement(artist,y))['ConstituentID']).replace("[","").replace("]","") == x:
+                artistas_artwork4 =  str((lt.getElement(artist,y))['DisplayName'])
+                break
+    print('Titulo: ' + artwork_4['Title'] +' Artista(s): ' + str(artistas_artwork4) +  ' Date Acquired: ' +
+    artwork_4['DateAcquired'] + ' Medio :' + artwork_4['Medium'] + ' Dimensions: ' + artwork_4['Dimensions'])
+
+
+
+    artwork_5 = lt.getElement(ord_artworks,int(pos_1-1))
+    id_artwork5 = str(artwork_5['ConstituentID']).replace("[","").replace("]","")
+    list_id_artwork_5 = id_artwork5.split(",")
+    artistas_artwork5 = ""
+    
+    for x in list_id_artwork_5:
+        for y in range(1,lt.size(artist)+1):
+            
+            if str((lt.getElement(artist,y))['ConstituentID']).replace("[","").replace("]","") == x:
+                artistas_artwork5 =  str((lt.getElement(artist,y))['DisplayName'])
+                break
+    print('Titulo: ' + artwork_5['Title'] +' Artista(s): ' + str(artistas_artwork5) +  ' Date Acquired: ' +
+    artwork_5['DateAcquired'] + ' Medio: ' + artwork_5['Medium'] + ' Dimensions: ' + artwork_5['Dimensions'])
+
+
+            
+    artwork_6 = lt.getElement(ord_artworks,int(pos_1-1))
+    id_artwork6 = str(artwork_6['ConstituentID']).replace("[","").replace("]","")
+    list_id_artwork_6 = id_artwork6.split(",")
+    artistas_artwork6 = ""
+    
+    for x in list_id_artwork_6:
+        for y in range(1,lt.size(artist)+1):
+            
+            if str((lt.getElement(artist,y))['ConstituentID']).replace("[","").replace("]","") == x:
+                artistas_artwork6 =  str((lt.getElement(artist,y))['DisplayName'])
+                break
+    print('Titulo: ' + artwork_6['Title'] +' Artista(s): ' + str(artistas_artwork6) +  ' Date Acquired: ' +
+    artwork_6['DateAcquired'] + ' Medio: ' + artwork_6['Medium'] + ' Dimensions: ' + artwork_6['Dimensions'])
+
+        
 
 
 
@@ -114,19 +270,24 @@ while True:
 
 
     elif int(inputs[0]) == 3:
-        size = int(input("Indique tamaño de la muestra (mayor a 10 para que se despliege una muestra de los 10 primeros): "))
-        if size > sizeartworks:
-            print("Eliga un valor menor a la totalidad de archivos ", str(sizeartworks), " para realizar la operacion")
+        fecha_1 = (input("Ingrese la fecha incial desde la cual se tomaran las obras en el formato AAAA-MM-DD: "))
+        fecha_2 = (input("Ingrese la fecha final hasta la cual se tomaran las obras en el formato AAAA-MM-DD: "))
+
+        if len(list(fecha_1.split("-"))) != 3 or len(list(fecha_2.split("-"))) != 3:
+            print('Ingrese la fecha en el formato valido AAAA-MM-DD')
+            
         else:    
-            print("Eliga el tipo de algortimo a usar para el ordenamiento de las obras")
-            print("1- Insertion Sort")
-            print("2- Shell Sort")
-            print("3- Merge Sort")
-            print("4- Quick sort")
-            algorithm = int(input("Seleccione una opcion para continuar"))
-            result = controller.sortArtworks(catalog, int(size), algorithm)
-            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",str(result[0]))
-            printSortResults(result[1])
+            y1, m1, d1 = list(fecha_1.split("-"))
+            y2, m2, d2 = list(fecha_2.split("-"))
+
+            valor_fecha_1 = date(int(y1), int(m1), int(d1))
+            valor_fecha_2 = date(int(y2), int(m2), int(d2))
+
+            if valor_fecha_1 > valor_fecha_2:
+                print("La fecha inicial no puede ser mayor a la final, vuelva a intentarlo")
+            else:    
+                result = controller.sortArtworks(catalog)
+                printSortResultsArtworks(result[1], fecha_1, fecha_2)
 
         
     else:
