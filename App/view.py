@@ -177,7 +177,7 @@ def printSortResultsArtworks(ord_artworks, fecha_1, fecha_2):
 
 
 
-    artwork_4 = lt.getElement(ord_artworks,int(pos_1-2))
+    artwork_4 = lt.getElement(ord_artworks,int(pos_2-2))
     id_artwork4 = str(artwork_4['ConstituentID']).replace("[","").replace("]","")
     list_id_artwork_4 = id_artwork4.split(",")
     artistas_artwork4 = ""
@@ -193,7 +193,7 @@ def printSortResultsArtworks(ord_artworks, fecha_1, fecha_2):
 
 
 
-    artwork_5 = lt.getElement(ord_artworks,int(pos_1-1))
+    artwork_5 = lt.getElement(ord_artworks,int(pos_2-1))
     id_artwork5 = str(artwork_5['ConstituentID']).replace("[","").replace("]","")
     list_id_artwork_5 = id_artwork5.split(",")
     artistas_artwork5 = ""
@@ -209,7 +209,7 @@ def printSortResultsArtworks(ord_artworks, fecha_1, fecha_2):
 
 
             
-    artwork_6 = lt.getElement(ord_artworks,int(pos_1-1))
+    artwork_6 = lt.getElement(ord_artworks,int(pos_2))
     id_artwork6 = str(artwork_6['ConstituentID']).replace("[","").replace("]","")
     list_id_artwork_6 = id_artwork6.split(",")
     artistas_artwork6 = ""
