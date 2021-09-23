@@ -235,7 +235,7 @@ def printSortResultsArtistArtowrk_Teqc(ord_artworkId,codigo_artista):
         
         if codigo_artista in str(lt.getElement(ord_artworkId,x)['ConstituentID']).replace("[","").replace("]",""):
             total_obras += 1
-            if lt.isPresent(tipos_medios, lt.getElement(ord_artworkId,x)['Medium']) == 0:
+            if lt.isPresent(tipos_medios, str(lt.getElement(ord_artworkId,x)['Medium'])) == 0:
                 lt.addLast(tipos_medios, ( lt.getElement(ord_artworkId,x)['Medium'], 1))
                 total_medios += 1
             else:
@@ -374,6 +374,9 @@ while True:
             result = controller.sortArtistArtworks_tecq(catalog)
             printSortResultsArtistArtowrk_Teqc(result[1],codigo_artista)
             print('Elapsed time: ', result[0])
+
+    elif int(inputs[0]) == 6:
+        depa = input("Ingrese el departamento del museo del cual se va a transportar")  
         
     else:
         sys.exit(0)
