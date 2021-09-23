@@ -97,18 +97,34 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     
 
     if len(list(artwork1['DateAcquired'].split("-"))) != 3 and len(list(artwork2['DateAcquired'].split("-"))) == 3:
-        return True    
+        return False    
     elif len(list(artwork1['DateAcquired'].split("-"))) == 3 and len(list(artwork2['DateAcquired'].split("-"))) != 3:
-        return False
-    elif len(list(artwork1['DateAcquired'].split("-"))) != 3 and len(list(artwork2['DateAcquired'].split("-"))) != 3:
         return True
+    elif len(list(artwork1['DateAcquired'].split("-"))) != 3 and len(list(artwork2['DateAcquired'].split("-"))) != 3:
+        return False
     else: 
-        d1, m1, y1 = list(artwork1['DateAcquired'].split("-"))
-        d2, m2, y2 = list(artwork2['DateAcquired'].split("-"))
+        y1, m1, d1 = list(artwork1['DateAcquired'].split("-"))
+        y2, m2, d2 = list(artwork2['DateAcquired'].split("-"))
 
-        value = date(int(d1), int(m1), int(y1)) < date(int(d2), int(m2), int(y2))
+        value = date(int(y1), int(m1), int(d1)) < date(int(y2), int(m2), int(d2))
         return value      
 
+
+def cmpArtworkByArtistID(artwork1, artwork2):
+    """
+    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
+    Args:
+    artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+    artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    """
+    
+
+    if artwork1['ConstituentID'] > artwork2['ConstituentID']:
+        return True   
+    elif artwork1['ConstituentID'] < artwork2['ConstituentID']:
+        return False
+    else: 
+        return True     
 
 
 
@@ -118,19 +134,22 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
 
 # Funciones de ordenamiento
 
-def sortArtworks(catalog, size, algorithm):
+def sortArtworks(catalog):
+    size = lt.size(catalog['artworks'])
     sub_list = lt.subList(catalog['artworks'], 1, size)
     sub_list = sub_list.copy()
     start_time = time.process_time()
-    sorted_list = ""
-    if algorithm == 1:
-        sorted_list = ins.sort(sub_list, cmpArtworkByDateAcquired)
-    elif algorithm == 2:
-        sorted_list = ss.sort(sub_list, cmpArtworkByDateAcquired)
-    elif algorithm == 3:
-        sorted_list = ms.sort(sub_list, cmpArtworkByDateAcquired)   
-    elif algorithm == 4:
-        sorted_list = qs.sort(sub_list, cmpArtworkByDateAcquired)
+    sorted_list = ss.sort(sub_list, cmpArtworkByDateAcquired)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+def sortArtistArtworks_tecq(catalog):
+    size = lt.size(catalog['artworks'])
+    sub_list = lt.subList(catalog['artworks'], 1, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = ss.sort(sub_list, cmpArtworkByArtistID)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list

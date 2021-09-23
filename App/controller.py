@@ -79,11 +79,18 @@ def loadArtworks(catalog):
 
 
 # Funciones de ordenamiento
-def sortArtworks(catalog, size, algorithm):
+def sortArtworks(catalog):
     """
-    Ordena los libros por average_rating
+    Ordena los libros por fecha 
     """
-    return model.sortArtworks(catalog, size, algorithm)
+    return model.sortArtworks(catalog)
+
+def sortArtistArtworks_tecq(catalog):
+    """
+    Ordena los libros por fecha 
+    """
+    return model.sortArtistArtworks_tecq(catalog)
+   
 
 # Funciones de consulta sobre el catálogo
 
