@@ -71,6 +71,7 @@ def printSortResults(ord_artworks, sample = 10):
 
 
 
+
 """
 Menu principal
 """
@@ -98,18 +99,30 @@ while True:
         size=str(lt.size(catalog['artists']))
         sizeartists=(lt.size(catalog['artists']))
         sizeartworks=(lt.size(catalog['artworks']))
-        artist=catalog['artists']
+        artists=catalog['artists']
         artworks=catalog['artworks']
         print('Artistas cargados: ' +str(sizeartists))
         print('Obras cargadas: ' + str(sizeartworks))
         print('Last 3 artists')
         for i in range(0,3):
-            print('Artista '+str(sizeartists-2+i)+': '+(lt.getElement(artist,sizeartists-2+i))['DisplayName'])
+            print('Artista '+str(sizeartists-2+i)+': '+(lt.getElement(artists,sizeartists-2+i))['DisplayName'])
         print('----------------')
         print('Last 3 artworks')
         for i in range(0,3):
             print('Obra '+str(sizeartworks-2+i)+': '+(lt.getElement(artworks,sizeartworks-2+i))['Title'])
         print('----------------')
+    elif int(inputs[0]) == 2:
+        result=controller.listarcronologicamente(catalog,1920,1985)
+        print('-------------')
+        sublist1=lt.subList(result,1,3)  
+        sublist2=lt.subList(result,lt.size(result)-3,3)
+        print('The first and last 3 are:')
+        for i in range(1,4):
+            print(lt.getElement(sublist1,i))
+            print('--------------')
+        for i in range(1,4):
+            print(lt.getElement(sublist2,i))
+            print('------------')
 
 
 
@@ -127,6 +140,30 @@ while True:
             result = controller.sortArtworks(catalog, int(size), algorithm)
             print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",str(result[0]))
             printSortResults(result[1])
+    elif int(inputs[0])==5:
+        result=controller.nacionalidadautores(catalog)
+        sublist=lt.subList(result,1,10)
+        print('-----------------------')
+        for i in range(1,11):
+            print(lt.getElement(sublist,i))
+
+
+
+
+        
+
+
+            
+
+
+        
+
+        
+
+
+
+
+
 
         
     else:

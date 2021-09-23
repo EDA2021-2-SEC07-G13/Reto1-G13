@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import compareElements, defaultfunction
 import config as cf
 from datetime import *
 import time
@@ -33,6 +34,8 @@ from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import shellsort as ss
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Sorting import quicksort as qs
+from DISClib.Algorithms.Sorting import selectionsort as sso
+
 assert cf
 
 """
@@ -112,6 +115,7 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     
 
 
+
 # Funciones de ordenamiento
 
 def sortArtworks(catalog, size, algorithm):
@@ -130,3 +134,152 @@ def sortArtworks(catalog, size, algorithm):
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
+
+
+
+def busquedad_binaria_begindate(lst,date)->int:
+    """Busqueda binaria de un elemento en una lista ordenada ascendentemente,
+     devuelve la posición donde se encuentra el elemento,si no está el elemento
+     devuelve -1,si hay mas de un elemento devuelve la ultima posición donde está ese elemento; orden de complejidad O(log(n)) """
+    i=0
+    f=lt.size(lst)
+    pos=-1
+    encontro=False
+    while i<=f and not encontro:
+        m=(i+f)//2
+        if int(lt.getElement(lst,m)['BeginDate'])==date:
+            encontro=True
+            pos=m    
+        elif date<int(lt.getElement(lst,m)['BeginDate']):
+            f=m-1
+        else:
+            i=m+1
+    return pos
+
+def cmpfuntion1(artist1,artist2):
+    begindate1=artist1['BeginDate']
+    begindate2=artist2['BeginDate']
+    begindate1=int(begindate1)
+    begindate2=int(begindate2)
+
+    if begindate2>begindate1:
+        return True
+    else:
+        return False
+
+
+
+
+def listarcronologicamente(catalog,ano_inicial,ano_final):
+    artists=catalog['artists']
+    ms.sort(artists,cmpfuntion1)
+    for indice in range(1,lt.size(artists)+1):
+        if int(lt.getElement(artists,indice)['BeginDate'])==ano_final and int(lt.getElement(artists,indice+1)['BeginDate'])>ano_final:
+            indice_final=indice
+        if int(lt.getElement(artists,indice)['BeginDate'])==ano_inicial and int(lt.getElement(artists,indice-1)['BeginDate'])<ano_inicial:
+            indice_inicial=indice
+    sizesublist=indice_final-indice_inicial
+    listadeseada=lt.subList(artists,indice_inicial,sizesublist)
+
+        
+   
+    return listadeseada
+
+def cmpfuntion2(id1, id2):
+    id1=int(id1)
+    id2=int(id2)
+    if id2 > id1:
+        return True
+    else:
+        return False
+
+
+def busquedad_binaria_id(lst,id)->int:
+    """Busqueda binaria de un elemento en una lista ordenada ascendentemente,
+     devuelve la posición donde se encuentra el elemento,si no está el elemento
+     devuelve -1,si hay mas de un elemento devuelve la ultima posición donde está ese elemento; orden de complejidad O(log(n)) """
+    i=0
+    f=lt.size(lst)
+    pos=-1
+    encontro=False
+    while i<=f and not encontro:
+        m=(i+f)//2
+        if (int(lt.getElement(lst,m))==int(id)):
+            encontro=True
+            pos=m    
+        elif int(id)<int(lt.getElement(lst,m)):
+            f=m-1
+        else:
+            i=m+1
+    return pos
+
+def cmpfuntion3(inf1,inf2):
+    frec1=inf1[1]
+    frec2=inf2[1]
+    if frec2<frec1:
+        return True
+    else:
+        return False
+def cmpfuntion4(id1,id2):
+    id1=id1[0]
+    id2=id2[0]
+    if int(id2)>int(id1):
+        return True
+
+
+
+def nacionalidadautores(catalog):
+    artists=catalog['artists']
+    idslist=lt.newList('ARRAY_LIST')
+    artworks=catalog['artworks']
+    dicnat={}
+    for indice in range(1,lt.size(artists)+1):
+        artist=lt.getElement(artists,indice)
+        nati=artist['Nationality'].lower()
+        if nati=='' or nati=='nationality unknown':
+            nati='unknow'
+        dicnat[nati]=0
+        
+    for indice in range(1,lt.size(artworks)+1):
+        artwork=lt.getElement(artworks,indice)
+        ids=artwork.pop('ConstituentID')
+        ids=ids.replace(']','').replace('[','').split(',')
+        for id in ids:
+            lt.addLast(idslist,id)
+
+    for indice in range(1,lt.size(artists)+1):
+        artist=lt.getElement(artists,indice)
+        if artist=='':
+            artist='artist unknow'
+        idartis=int(artist['ConstituentID'])
+        nation=artist['Nationality'].lower()
+        if nation=='' or nation=='nationality unknown':
+            nation='unknow'
+        for indice2 in range(1,lt.size(idslist)+1):
+            if int(lt.getElement(idslist,indice2))==idartis:
+                dicnat[nation]+=1
+          
+    finallist=lt.newList('ARRAY_LIST')
+    for key in dicnat:
+        lt.addLast(finallist,(key,dicnat[key]))
+    ms.sort(finallist,cmpfuntion3)
+    
+    
+
+
+            
+
+
+    return finallist
+
+
+
+    
+
+
+
+            
+
+
+            
+

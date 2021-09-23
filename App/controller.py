@@ -60,7 +60,7 @@ def loadArtists(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    artistsfile = cf.data_dir + 'MoMA/Artists-utf8-10pct.csv'
+    artistsfile = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
     input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
     for artist in input_file:
         model.addArtist(catalog, artist)
@@ -70,7 +70,7 @@ def loadArtworks(catalog):
     """
     Carga las obras del archivo y las agrega a la lista de obras
     """
-    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-10pct.csv'
+    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(artworksfile, encoding='utf-8'))
     for artwork in input_file:
         model.addArtwork(catalog, artwork)
@@ -86,3 +86,10 @@ def sortArtworks(catalog, size, algorithm):
     return model.sortArtworks(catalog, size, algorithm)
 
 # Funciones de consulta sobre el catálogo
+
+def listarcronologicamente(catalog,ano_inicial,ano_final):
+    'Lista en orden cronologica los artistas, segun un rango de tiempo'
+    return model.listarcronologicamente(catalog,ano_inicial,ano_final)
+
+def nacionalidadautores(catalog):
+    return model.nacionalidadautores(catalog)
