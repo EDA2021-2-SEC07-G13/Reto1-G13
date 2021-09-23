@@ -223,6 +223,53 @@ def printSortResultsArtworks(ord_artworks, fecha_1, fecha_2):
     print('Titulo: ' + artwork_6['Title'] +' Artista(s): ' + str(artistas_artwork6) +  ' Date Acquired: ' +
     artwork_6['DateAcquired'] + ' Medio: ' + artwork_6['Medium'] + ' Dimensions: ' + artwork_6['Dimensions'])
 
+def printSortResultsArtistArtowrk_Teqc(ord_artworkId,codigo_artista):
+    
+    size = lt.size(ord_artworkId)
+    total_obras = 0
+    total_medios = 0
+    tipos_medios = lt.newList()
+    
+
+    for x in range(1, size+1):
+        
+        if codigo_artista in str(lt.getElement(ord_artworkId,x)['ConstituentID']).replace("[","").replace("]",""):
+            total_obras += 1
+            if lt.isPresent(tipos_medios, lt.getElement(ord_artworkId,x)['Medium']) == 0:
+                lt.addLast(tipos_medios, ( lt.getElement(ord_artworkId,x)['Medium'], 1))
+                total_medios += 1
+            else:
+                pos = lt.isPresent(tipos_medios, lt.getElement(ord_artworkId,x)['Medium'])
+                element = lt.getElement(tipos_medios, pos)
+                lt.changeInfo(tipos_medios,pos,(element[1],element[2]+1))    
+
+    print("total obras", str(total_obras))
+    print("total medios", str(total_medios))
+
+    num_medio_mas_usado = 0
+    medio_mas_usado = ''
+    print( 'Medios usados y su cantidad:')
+    for x in range(1, lt.size(tipos_medios)+1):
+        print( lt.getElement(tipos_medios,x))
+        if lt.getElement(tipos_medios,x)[1] > num_medio_mas_usado:
+            num_medio_mas_usado = lt.getElement(tipos_medios,x)[1]
+            medio_mas_usado = lt.getElement(tipos_medios,x)[0]
+
+    print('El medio mas usado es: ', str(medio_mas_usado))
+    print("obras con el medio mas usado")
+    for x in range(1, size+1):
+        if codigo_artista in str(lt.getElement(ord_artworkId,x)['ConstituentID']).replace("[","").replace("]",""):
+            if medio_mas_usado in str(lt.getElement(ord_artworkId,x)['Medium']):
+                print('Titulo: ', str(lt.getElement(ord_artworkId,x)['Title']), ' Fecha: ',str(lt.getElement(ord_artworkId,x)['Date']),' Medio: ',str(lt.getElement(ord_artworkId,x)['Medium']),'Dimensiones', str(lt.getElement(ord_artworkId,x)['Dimensions']))
+
+
+    
+
+
+            
+        
+
+
         
 
 
@@ -289,6 +336,29 @@ while True:
                 result = controller.sortArtworks(catalog)
                 printSortResultsArtworks(result[1], fecha_1, fecha_2)
 
+    elif int(inputs[0]) == 4:
+        artist_name = input("Ingrese el nombre del artista")
+        nombres_artistas = lt.newList()
+        id_artistas = lt.newList()
+
+        
+
+
+        for x in range(1,lt.size(artist)):
+            lt.addLast(nombres_artistas, lt.getElement(artist,x)['DisplayName'])
+            lt.addLast(id_artistas, lt.getElement(artist,x)['ConstituentID'])
+
+        
+
+        if lt.isPresent(nombres_artistas, artist_name) == 0:
+            print("Digite un nombre de artista valido")
+            1
+        else:
+            print("esta el artista")
+            pos = lt.isPresent(nombres_artistas, artist_name) 
+            codigo_artista = lt.getElement(id_artistas,pos)
+            result = controller.sortArtistArtworks_tecq(catalog)
+            printSortResultsArtistArtowrk_Teqc(result[1],codigo_artista)
         
     else:
         sys.exit(0)

@@ -85,4 +85,11 @@ def sortArtworks(catalog):
     """
     return model.sortArtworks(catalog)
 
+def sortArtistArtworks_tecq(catalog):
+    """
+    Ordena los libros por fecha 
+    """
+    return model.sortArtistArtworks_tecq(catalog)
+   
+
 # Funciones de consulta sobre el catálogo

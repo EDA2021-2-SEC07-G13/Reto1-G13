@@ -107,6 +107,22 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
         return value      
 
 
+def cmpArtworkByArtistID(artwork1, artwork2):
+    """
+    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
+    Args:
+    artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+    artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    """
+    
+
+    if artwork1['ConstituentID'] > artwork2['ConstituentID']:
+        return True   
+    elif artwork1['ConstituentID'] < artwork2['ConstituentID']:
+        return False
+    else: 
+        return True     
+
 
 
     
@@ -123,3 +139,13 @@ def sortArtworks(catalog):
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
+
+def sortArtistArtworks_tecq(catalog):
+    size = lt.size(catalog['artworks'])
+    sub_list = lt.subList(catalog['artworks'], 1, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = ss.sort(sub_list, cmpArtworkByArtistID)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list    
