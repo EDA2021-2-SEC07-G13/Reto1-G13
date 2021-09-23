@@ -317,8 +317,8 @@ while True:
     elif int(inputs[0]) == 2:
         result=controller.listarcronologicamente(catalog,1920,1985)
         print('-------------')
-        sublist1=lt.subList(result,1,3)  
-        sublist2=lt.subList(result,lt.size(result)-3,3)
+        sublist1=lt.subList(result[0],1,3)  
+        sublist2=lt.subList(result[0],lt.size(result[0])-3,3)
         print('The first and last 3 are:')
         for i in range(1,4):
             print(lt.getElement(sublist1,i))
@@ -326,7 +326,7 @@ while True:
         for i in range(1,4):
             print(lt.getElement(sublist2,i))
             print('------------')
-
+        print('elapsed time: ', result[1])
 
 
     elif int(inputs[0]) == 3:
@@ -348,6 +348,7 @@ while True:
             else:    
                 result = controller.sortArtworks(catalog)
                 printSortResultsArtworks(result[1], fecha_1, fecha_2)
+                print('elapsed time:', result[0])
 
     elif int(inputs[0]) == 4:
         artist_name = input("Ingrese el nombre del artista")
@@ -372,6 +373,7 @@ while True:
             codigo_artista = lt.getElement(id_artistas,pos)
             result = controller.sortArtistArtworks_tecq(catalog)
             printSortResultsArtistArtowrk_Teqc(result[1],codigo_artista)
+            print('Elapsed time: ', result[0])
         
     else:
         sys.exit(0)

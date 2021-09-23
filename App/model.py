@@ -191,7 +191,10 @@ def cmpfuntion1(artist1,artist2):
 
 def listarcronologicamente(catalog,ano_inicial,ano_final):
     artists=catalog['artists']
+    start_time = time.process_time()
     ms.sort(artists,cmpfuntion1)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
     for indice in range(1,lt.size(artists)+1):
         if int(lt.getElement(artists,indice)['BeginDate'])==ano_final and int(lt.getElement(artists,indice+1)['BeginDate'])>ano_final:
             indice_final=indice
@@ -202,7 +205,7 @@ def listarcronologicamente(catalog,ano_inicial,ano_final):
 
         
    
-    return listadeseada
+    return listadeseada,elapsed_time_mseg
 
 def cmpfuntion2(id1, id2):
     id1=int(id1)
